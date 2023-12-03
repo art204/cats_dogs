@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "cats-dogs"
+version = "0.1.0"
+description = "Repository for MLOps homeworks"
+authors = ["Artem Dikov <avdikov_1@edu.hse.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = "^2.1.1"
+torchvision = "^0.16.1"
+torchsummary = "^1.5.1"
+matplotlib = "^3.8.2"
+numpy = "^1.26.2"
+scikit-learn = "^1.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
