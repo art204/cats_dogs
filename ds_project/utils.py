@@ -1,9 +1,10 @@
+import time
+
 import numpy as np
 import torch
-from sklearn.metrics import f1_score
 from IPython.display import clear_output
 from matplotlib import pyplot as plt
-import time
+from sklearn.metrics import f1_score
 from tqdm.auto import tqdm
 
 

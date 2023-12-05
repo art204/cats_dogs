@@ -1,5 +1,5 @@
-from torchvision import transforms
 from torch.utils.data import DataLoader
+from torchvision import transforms
 from torchvision.datasets import ImageFolder
 
 from ds_project.inference_dataset import InferenceDataset

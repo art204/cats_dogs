@@ -5,6 +5,7 @@ import torch
 
 from ds_project.data_loader import new_data_loader
 
+
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 

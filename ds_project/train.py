@@ -1,11 +1,13 @@
-import torch
-import fire
 import os
 
+import fire
+import torch
 from torch.nn import CrossEntropyLoss
+
 from ds_project.data_loader import new_data_loader
 from ds_project.fcnn import new_fcnn
 from ds_project.utils import train_model
+
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 DATA_PATH = r"data"  # PATH TO THE DATASET
