@@ -130,7 +130,6 @@ def train_model(
 
     train_loss, val_loss = [], [1]
     val_loss_idx = [0]
-    best_model = None
     top_val_accuracy = 0
 
     for epoch in range(n_epochs):

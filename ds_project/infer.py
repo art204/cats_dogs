@@ -16,7 +16,7 @@ def predict(model, batch_generator):
     result = np.empty(shape=(0,))
     files = []
 
-    for X_batch, y_batch, path_batch in batch_generator:
+    for X_batch, _, path_batch in batch_generator:
         logits = model(X_batch.to(device))
         predicted = torch.nn.functional.softmax(logits, dim=1)
         predicted = torch.argmax(predicted, dim=1).numpy()
