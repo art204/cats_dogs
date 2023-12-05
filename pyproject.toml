@@ -21,6 +21,8 @@ pandas = "^2.1.3"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
+dvc = "^3.32.0"
+dvc-gdrive = "^2.20.0"
 
 [tool.black]
 line-length = 90

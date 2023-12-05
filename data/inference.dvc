@@ -1,0 +1,6 @@
+outs:
+- md5: f4f4074ef48c20e6f0ee73899f1a1e7d.dir
+  size: 2702415
+  nfiles: 109
+  hash: md5
+  path: inference
