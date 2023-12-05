@@ -1,9 +1,11 @@
-import torchvision
 from torchvision import transforms
 from torch.utils.data import DataLoader
+from torchvision.datasets import ImageFolder
+
+from ds_project.inference_dataset import InferenceDataset
 
 
-def new_data_loader(data_path, size_h, size_w,
+def new_data_loader(data_path, size_h, size_w, inference=False,
                     batch_size=256, shuffle=False, num_workers=2,
                     image_mean=None, image_std=None):
     if image_std is None:
@@ -16,5 +18,8 @@ def new_data_loader(data_path, size_h, size_w,
         transforms.ToTensor(),  # converting to tensors
         transforms.Normalize(image_mean, image_std)  # normalize image data per-channel
     ])
-    dataset = torchvision.datasets.ImageFolder(data_path, transform=transformer)
+    if inference:
+        dataset = InferenceDataset(data_path, transform=transformer)
+    else:
+        dataset = ImageFolder(data_path, transform=transformer)
     return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers)
