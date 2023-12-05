@@ -6,7 +6,6 @@ from torch.utils.data import Dataset
 
 
 class InferenceDataset(Dataset):
-
     def __init__(self, root, transform=None):
         super().__init__()
         self.root = root
@@ -38,7 +37,7 @@ class InferenceDataset(Dataset):
             file_path = os.path.join(self.root, self.classes[label], filename)
         else:
             file_path = os.path.join(self.root, filename)
-        image = Image.open(file_path).convert('RGB')
+        image = Image.open(file_path).convert("RGB")
 
         if self.transform is not None:
             image = self.transform(image)
