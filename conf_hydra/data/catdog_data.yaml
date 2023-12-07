@@ -1,0 +1,4 @@
+data_train: ${hydra:runtime.cwd}/data/train_11k
+data_val: ${hydra:runtime.cwd}/data/val
+data_test: ${hydra:runtime.cwd}/data/test_labeled
+data_infer: ${hydra:runtime.cwd}/data/inference

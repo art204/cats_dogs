@@ -1,0 +1,5 @@
+size_h: 96
+size_w: 96
+dense_size: 256
+embedding_size: 64
+num_classes: 2

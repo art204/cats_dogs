@@ -1,0 +1,10 @@
+defaults:
+  - data: catdog_data
+  - model: fcnn
+  - _self_
+train:
+  epoch_num: 3
+  lr: 5e-4
+  batch_size: 256
+  ckpt_path: ${hydra:runtime.cwd}/models
+  ckpt_name: model_fcnn

@@ -133,3 +133,6 @@ dmypy.json
 
 # Redis
 fastapi_service/redis/data/
+
+# Hydra
+*.hydra/

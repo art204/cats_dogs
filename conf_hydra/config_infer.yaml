@@ -1,0 +1,8 @@
+defaults:
+  - data: catdog_data
+  - model: fcnn
+  - _self_
+infer:
+  batch_size: 256
+  ckpt_path: ${hydra:runtime.cwd}/models
+  ckpt_name: model_fcnn
