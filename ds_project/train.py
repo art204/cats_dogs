@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 import hydra
 import mlflow
@@ -19,7 +20,7 @@ cs.store(name="train_config", node=TrainConfig)
 
 @hydra.main(version_base=None, config_path="../conf_hydra", config_name="config_train")
 def train(cfg: TrainConfig) -> None:
-    os.system("dvc pull")
+    subprocess.run(["dvc", "pull"])
     # device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     device = torch.device("cpu")
     model = new_fcnn(
@@ -50,6 +51,8 @@ def train(cfg: TrainConfig) -> None:
         shuffle=False,
         num_workers=2,
     )
+    if not os.path.exists(cfg.train.ckpt_path):
+        os.mkdir(cfg.train.ckpt_path)
     ckpt = f"{cfg.train.ckpt_path}/{cfg.train.ckpt_name}.ckpt"
 
     mlflow.set_tracking_uri(uri=cfg.mlflow.tracking_uri)

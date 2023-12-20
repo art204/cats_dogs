@@ -1,3 +1,5 @@
+import subprocess
+
 import hydra
 import numpy as np
 import pandas as pd
@@ -33,6 +35,7 @@ def predict(model, batch_generator):
 
 @hydra.main(version_base=None, config_path="../conf_hydra", config_name="config_infer")
 def inference(cfg: InferConfig, data_infer=None):
+    subprocess.run(["dvc", "pull"])
     model = torch.load(
         f"{cfg.infer.ckpt_path}/{cfg.infer.ckpt_name}.ckpt",
         map_location=torch.device(device),
