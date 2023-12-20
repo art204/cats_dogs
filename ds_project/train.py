@@ -1,7 +1,11 @@
+import os
+
 import hydra
+import mlflow
 import torch
 from conf_hydra.hydra_conf import TrainConfig
 from hydra.core.config_store import ConfigStore
+from omegaconf import OmegaConf
 from torch.nn import CrossEntropyLoss
 
 from ds_project.data_loader import new_data_loader
@@ -15,7 +19,9 @@ cs.store(name="train_config", node=TrainConfig)
 
 @hydra.main(version_base=None, config_path="../conf_hydra", config_name="config_train")
 def train(cfg: TrainConfig) -> None:
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    os.system("dvc pull")
+    # device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    device = torch.device("cpu")
     model = new_fcnn(
         cfg.model.size_h,
         cfg.model.size_w,
@@ -45,15 +51,40 @@ def train(cfg: TrainConfig) -> None:
         num_workers=2,
     )
     ckpt = f"{cfg.train.ckpt_path}/{cfg.train.ckpt_name}.ckpt"
-    model, opt = train_model(
-        model,
-        train_batch_gen,
-        val_batch_gen,
-        opt,
-        loss_fn,
-        n_epochs=cfg.train.epoch_num,
-        ckpt_name=ckpt,
-    )
+
+    mlflow.set_tracking_uri(uri=cfg.mlflow.tracking_uri)
+    mlflow.set_experiment(f"{cfg.train.ckpt_name} №1")
+
+    with mlflow.start_run(run_name="Run №1"):
+        # Log the hyperparameters
+        mlflow.log_params(
+            {
+                "model_name": cfg.train.ckpt_name,
+                "model_params": OmegaConf.to_container(cfg.model, resolve=True),
+                "epoch_num": cfg.train.epoch_num,
+                "lr": cfg.train.lr,
+                "data_train": cfg.data.data_train,
+                "data_val": cfg.data.data_val,
+                "git_commit_id": "write git commit here",
+            }
+        )
+
+        model, opt = train_model(
+            model,
+            train_batch_gen,
+            val_batch_gen,
+            opt,
+            loss_fn,
+            n_epochs=cfg.train.epoch_num,
+            ckpt_name=ckpt,
+            log_to_mlflow=True,
+        )
+        # Set a tag that we can use to remind ourselves what this run was for
+        mlflow.set_tag(
+            "Training Info",
+            f"{cfg.train.ckpt_name} model trained on data {cfg.data.data_train}",
+        )
+
     print(f"Model ckpt saved in {ckpt}")
 
 

@@ -1,4 +1,5 @@
 defaults:
+  - mlflow: mlflow_local
   - data: catdog_data
   - model: fcnn
   - _self_

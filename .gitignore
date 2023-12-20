@@ -136,3 +136,6 @@ fastapi_service/redis/data/
 
 # Hydra
 *.hydra/
+
+# mlflow
+mlruns/

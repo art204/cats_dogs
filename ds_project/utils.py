@@ -1,5 +1,6 @@
 import time
 
+import mlflow
 import numpy as np
 import torch
 from IPython.display import clear_output
@@ -50,12 +51,17 @@ def calculate_metrics(scores, labels, tracked_metrics=None, print_log=False):
     labels_array = np.array(labels)
 
     metric_results = {}
+    metric_results["metrics"] = {}
     for k, v in tracked_metrics.items():
         metric_value = v(scores_array, labels_array)
-        metric_results[k] = metric_value
+        metric_results["metrics"][k] = metric_value
 
     if print_log:
-        print(" | ".join(["{}: {:.4f}".format(k, v) for k, v in metric_results.items()]))
+        print(
+            " | ".join(
+                ["{}: {:.4f}".format(k, v) for k, v in metric_results["metrics"].items()]
+            )
+        )
 
     return metric_results
 
@@ -122,6 +128,7 @@ def train_model(
     n_epochs,
     ckpt_name=None,
     visualize=False,
+    log_to_mlflow=False,
 ):
     """
     Run training: forward/backward pass using train_batch_generator and evaluation using val_batch_generator.
@@ -163,10 +170,14 @@ def train_model(
         if visualize:
             clear_output()
 
-        # Logging
         val_loss_value = np.mean(metric_results["loss"])
         val_loss_idx.append(len(train_loss))
         val_loss.append(val_loss_value)
+        # Logging
+        if log_to_mlflow:
+            mlflow.log_metric("val_loss", val_loss_value, step=epoch)
+            for k, v in metric_results["metrics"].items():
+                mlflow.log_metric("val_" + k, v, step=epoch)
 
         if visualize:
             # tensorboard for the poor
@@ -205,7 +216,7 @@ def train_model(
                 epoch + 1, n_epochs, time.time() - start_time
             )
         )
-        val_accuracy_value = metric_results["accuracy"]
+        val_accuracy_value = metric_results["metrics"]["accuracy"]
         if val_accuracy_value > top_val_accuracy and ckpt_name is not None:
             top_val_accuracy = val_accuracy_value
 

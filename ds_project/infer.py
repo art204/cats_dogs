@@ -8,7 +8,8 @@ from hydra.core.config_store import ConfigStore
 from ds_project.data_loader import new_data_loader
 
 
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+# device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+device = torch.device("cpu")
 cs = ConfigStore.instance()
 cs.store(name="infer_config", node=InferConfig)
 

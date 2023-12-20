@@ -35,10 +35,16 @@ class ModelParams:
 
 
 @dataclass
+class MlflowParams:
+    tracking_uri: str
+
+
+@dataclass
 class TrainConfig:
     data: Data
     train: TrainParams
     model: ModelParams
+    mlflow: MlflowParams
 
 
 @dataclass
@@ -46,3 +52,4 @@ class InferConfig:
     data: Data
     infer: InferParams
     model: ModelParams
+    mlflow: MlflowParams
