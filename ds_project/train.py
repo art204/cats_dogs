@@ -11,7 +11,7 @@ from torch.nn import CrossEntropyLoss
 
 from ds_project.data_loader import new_data_loader
 from ds_project.fcnn import new_fcnn
-from ds_project.utils import train_model
+from ds_project.train_test_utils import train_model
 
 
 cs = ConfigStore.instance()
