@@ -23,11 +23,9 @@ def new_data_loader(
 
     transformer = transforms.Compose(
         [
-            transforms.Resize((size_h, size_w)),  # scaling images to fixed size
-            transforms.ToTensor(),  # converting to tensors
-            transforms.Normalize(
-                image_mean, image_std
-            ),  # normalize image data per-channel
+            transforms.Resize((size_h, size_w)),
+            transforms.ToTensor(),
+            transforms.Normalize(image_mean, image_std),
         ]
     )
     if inference:

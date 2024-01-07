@@ -17,7 +17,6 @@ def f1(scores, labels, threshold=0.5):
 def calculate_metrics(scores, labels, tracked_metrics=None, print_log=False):
     """Compute all the metrics from tracked_metrics dict using scores and labels."""
 
-    # you may add other metrics if you wish
     if tracked_metrics is None:
         tracked_metrics = {"accuracy": accuracy, "f1-score": f1}
 
@@ -49,7 +48,6 @@ def get_score_distributions(epoch_result_dict):
     scores = epoch_result_dict["scores"]
     labels = epoch_result_dict["labels"]
 
-    # save per-class scores
     for class_id in [0, 1]:
         epoch_result_dict["scores_" + str(class_id)] = np.array(scores)[
             np.array(labels) == class_id

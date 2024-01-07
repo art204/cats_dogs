@@ -21,7 +21,7 @@ cs.store(name="train_config", node=TrainConfig)
 @hydra.main(version_base=None, config_path="../conf_hydra", config_name="config_train")
 def train(cfg: TrainConfig) -> None:
     subprocess.run(["dvc", "pull"])
-    # device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
     device = torch.device("cpu")
     model = new_fcnn(
         cfg.model.size_h,
@@ -59,7 +59,6 @@ def train(cfg: TrainConfig) -> None:
     mlflow.set_experiment(f"{cfg.train.ckpt_name} №1")
 
     with mlflow.start_run(run_name="Run №1"):
-        # Log the hyperparameters
         mlflow.log_params(
             {
                 "model_name": cfg.train.ckpt_name,
@@ -82,7 +81,7 @@ def train(cfg: TrainConfig) -> None:
             ckpt_name=ckpt,
             log_to_mlflow=True,
         )
-        # Set a tag that we can use to remind ourselves what this run was for
+
         mlflow.set_tag(
             "Training Info",
             f"{cfg.train.ckpt_name} model trained on data {cfg.data.data_train}",
