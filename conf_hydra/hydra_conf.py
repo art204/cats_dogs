@@ -40,11 +40,18 @@ class MlflowParams:
 
 
 @dataclass
+class TransformsConfig:
+    image_mean: list
+    image_std: list
+
+
+@dataclass
 class TrainConfig:
     data: Data
     train: TrainParams
     model: ModelParams
     mlflow: MlflowParams
+    img_transforms: TransformsConfig
 
 
 @dataclass
@@ -53,3 +60,4 @@ class InferConfig:
     infer: InferParams
     model: ModelParams
     mlflow: MlflowParams
+    img_transforms: TransformsConfig

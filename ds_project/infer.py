@@ -46,6 +46,8 @@ def inference(cfg: InferConfig, data_infer=None):
         data_infer,
         cfg.model.size_h,
         cfg.model.size_w,
+        cfg.img_transforms.image_mean,
+        cfg.img_transforms.image_std,
         inference=True,
         batch_size=cfg.infer.batch_size,
         shuffle=False,

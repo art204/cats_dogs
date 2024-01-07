@@ -2,6 +2,7 @@ defaults:
   - mlflow: mlflow_local
   - data: catdog_data
   - model: fcnn
+  - img_transforms: config_transforms
   - _self_
 infer:
   batch_size: 256
